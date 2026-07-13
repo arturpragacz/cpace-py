@@ -1,0 +1,66 @@
+[project]
+name = "cpace"
+dynamic = ["version"]
+authors = [{ name = "Artur Pragacz" }]
+description = "CPace balanced PAKE protocol implementation."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICEN[CS]E*"]
+keywords = ["cpace", "pake", "password-authenticated", "key-exchange", "x25519"]
+classifiers = [
+	"Intended Audience :: Developers",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Programming Language :: Python :: 3.14",
+	"Topic :: Security :: Cryptography",
+	"Topic :: Software Development :: Libraries",
+	"Typing :: Typed",
+]
+requires-python = ">=3.10"
+dependencies = ["cryptography>=42"]
+
+[project.urls]
+Homepage = "https://github.com/arturpragacz/cpace-py"
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["mypy>=1.16", "pytest>=8", "ruff>=0.11"]
+
+[tool.hatch.version]
+path = "src/cpace/__init__.py"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+	"D203", # 1 blank line required before class docstring
+	"D213", # Multi-line docstring summary should start at the second line
+	"EM", # flake8-errmsg
+	"TRY003", # Avoid specifying long messages outside the exception class
+
+	### May conflict with the formatter ###
+	"COM812", # Trailing comma missing  # redundant
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = ["S101", "INP001"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 110
+
+[tool.mypy]
+strict = true
+local_partial_types = true
+strict_bytes = true
+warn_unreachable = true
+enable_error_code = "deprecated, ignore-without-code, redundant-self, truthy-iterable"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
